@@ -1,0 +1,20 @@
+HQL vs JPQL - Introduction
+==========================
+
+HQL  = Hibernate Query Language
+JPQL = Java Persistence Query Language
+
+Key Points:
+- Both are object-focused query languages similar to SQL
+- JPQL is a subset of HQL
+- All JPQL queries are valid HQL queries, but NOT vice versa
+- Both support SELECT, UPDATE, DELETE
+- HQL additionally supports INSERT
+
+Instead of table names and column names, HQL/JPQL use:
+  - Java class names  (e.g. Employee instead of employee)
+  - Java field names  (e.g. e.salary instead of em_salary)
+
+Reference: https://docs.jboss.org/hibernate/orm/4.3/devguide/en-US/html/ch11.html
+
+NOTE: This hands-on is a concept walkthrough — no code to write.

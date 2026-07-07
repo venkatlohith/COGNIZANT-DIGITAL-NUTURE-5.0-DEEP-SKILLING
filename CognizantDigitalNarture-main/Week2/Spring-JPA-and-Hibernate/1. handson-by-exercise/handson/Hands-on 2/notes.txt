@@ -1,0 +1,21 @@
+Hibernate XML Config implementation walk through
+
+SME to provide explanation on the sample Hibernate implementation available in the link below:
+https://www.tutorialspoint.com/hibernate/hibernate_examples.htm
+
+Explanation Topics:
+- Explain how object to relational database mapping is done in hibernate xml configuration file
+- Explain about following aspects of implementing the end to end operations in Hibernate:
+  - SessionFactory
+  - Session
+  - Transaction
+  - beginTransaction()
+  - commit()
+  - rollback()
+  - session.save()
+  - session.createQuery().list()
+  - session.get()
+  - session.delete()
+
+NOTE: No original code was provided in the source document for this exercise.
+It references the external Hibernate XML example at the tutorialspoint link above.

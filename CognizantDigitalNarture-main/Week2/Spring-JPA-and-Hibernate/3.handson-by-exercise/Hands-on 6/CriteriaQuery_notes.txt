@@ -1,0 +1,45 @@
+Criteria Query - Introduction
+==============================
+
+Use Case (Amazon-like dynamic filter):
+  - User searches "laptop"
+  - Left sidebar shows filters: Customer Review, RAM, HDD, OS, Weight, CPU...
+  - User may select 0, 1 or many of these filters
+  - The WHERE clause of the query changes dynamically based on selected filters
+
+Problem with HQL:
+  - You cannot easily build a dynamic WHERE clause with HQL
+  - You'd need complex string concatenation, which is error-prone
+
+Solution: Criteria Query
+  - Allows programmatic/dynamic construction of queries
+  - Filters are added/removed at runtime based on user input
+
+Key API Classes:
+  - CriteriaBuilder  -> entry point, obtained from EntityManager
+  - CriteriaQuery    -> represents the query being built
+  - Root             -> represents the entity/table being queried
+  - TypedQuery       -> used to execute the built criteria query
+
+Basic Example:
+--------------
+    EntityManager em = ...;
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+
+    CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
+    Root<Employee> root = cq.from(Employee.class);
+
+    // Add conditions dynamically
+    List<Predicate> predicates = new ArrayList<>();
+    predicates.add(cb.equal(root.get("permanent"), true));
+    predicates.add(cb.greaterThan(root.get("salary"), 50000));
+
+    cq.where(predicates.toArray(new Predicate[0]));
+
+    TypedQuery<Employee> query = em.createQuery(cq);
+    List<Employee> results = query.getResultList();
+
+Reference: https://howtodoinjava.com/hibernate/hibernate-criteria-queries-tutorial/
+
+NOTE: This hands-on is a concept + reference walkthrough.
+No specific code snippet was provided in the document beyond the reference link.

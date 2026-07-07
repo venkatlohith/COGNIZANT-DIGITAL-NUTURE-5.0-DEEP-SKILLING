@@ -1,0 +1,24 @@
+RESTful Web Service Resource Naming Guidelines
+==============================================
+
+URL Rules:
+- Plural resource name for all endpoints: /countries, /employees
+- GET all    : GET    /countries
+- GET one    : GET    /countries/{id}
+- Create     : POST   /countries         (data in request body)
+- Update     : PUT    /countries         (data in request body)
+- Delete     : DELETE /countries/{id}
+
+- Multi-word resource: use hyphen, NOT underscore. e.g. /menu-item NOT /menu_item
+
+Class-level @RequestMapping in Controller:
+    @RequestMapping("/countries")
+
+Method-level annotations:
+    @GetMapping            -> Get All
+    @GetMapping("/{id}")   -> Get Specific
+    @PostMapping           -> Create
+    @PutMapping            -> Update
+    @DeleteMapping("/{id}")-> Delete
+
+NOTE: No new code files for this hands-on. CountryController is refactored in Hands-on 2.

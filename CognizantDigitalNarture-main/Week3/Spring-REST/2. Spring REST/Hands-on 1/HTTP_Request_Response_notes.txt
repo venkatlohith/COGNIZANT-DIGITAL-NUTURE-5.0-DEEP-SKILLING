@@ -1,0 +1,32 @@
+HTTP Request & Response - Concept Walkthrough
+=============================================
+
+This hands-on is a concept walkthrough. No code is written.
+
+HTTP Request Format:
+--------------------
+GET /hello.txt HTTP/1.1
+User-Agent: curl/7.16.3 libcurl/7.16.3 OpenSSL/0.9.7l zlib/1.2.3
+Host: www.example.com
+Accept-Language: en, mi
+
+Line 1: Method (GET), Resource (/hello.txt), HTTP Version (HTTP/1.1)
+Line 2: Client details
+Line 3: Host server
+
+HTTP Response Format:
+---------------------
+HTTP/1.1 200 OK
+Date: Mon, 27 Jul 2009 12:28:53 GMT
+Server: Apache
+Content-Type: text/plain
+
+Hello World! My payload includes a trailing CRLF.
+
+Common Content-Types:
+  text/plain       - Plain text
+  text/html        - HTML document
+  application/json - JSON content
+  image/png        - PNG image
+
+Reference: https://tools.ietf.org/html/rfc7230 (page 7 for sample HTTP request/response)

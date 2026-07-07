@@ -1,0 +1,8 @@
+-- Run the payroll.sql script from spring-data-jpa-files folder:
+-- mysql> source D:\spring-data-jpa-files\payroll.sql
+--
+-- This creates the following tables:
+--   employee   (em_id, em_name, em_salary, em_permanent, em_date_of_birth, em_dp_id)
+--   department (dp_id, dp_name)
+--   skill      (sk_id, sk_name)
+--   employee_skill (es_em_id, es_sk_id)

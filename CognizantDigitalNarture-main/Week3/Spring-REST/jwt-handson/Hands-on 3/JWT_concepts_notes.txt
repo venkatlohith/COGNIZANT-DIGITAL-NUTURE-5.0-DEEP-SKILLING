@@ -1,0 +1,39 @@
+Understanding JWT - Concept Walkthrough
+========================================
+
+What is JWT?
+- JWT stands for JSON Web Token
+- Internet standard (IETF 7519) for creating JSON-based access tokens
+- Used to pass identity of authenticated users between client and server
+
+JWT Process Flow:
+  1. Client sends username and password to server
+  2. Server validates credentials, creates token (JWT) and responds it back
+  3. Client attaches the token in subsequent requests to server
+  4. Server validates the token (JWT) on each client request
+
+Structure of JWT (3 parts separated by dots):
+  Header.Payload.Signature
+
+  Header  : Contains encryption algorithm e.g. { "alg": "HS256" }
+  Payload : Contains application-specific data (user id, role, expiry)
+            e.g. { "sub": "user", "iat": 1570379474, "exp": 1570380674 }
+  Signature: HMACSHA256(base64(header) + "." + base64(payload), "secretkey")
+
+Limitations of HTTP Basic Authentication (overcome by JWT):
+  - Credentials must be sent on every request (stateless)
+  - Credentials are only Base64 encoded (not encrypted)
+  - Anyone who intercepts the header can decode it:
+    "YWRtaW46cHdk" -> base64 decode -> "admin:pwd"
+
+JWT overcomes this by:
+  - Sending credentials ONCE to get a token
+  - Attaching signed token (not credentials) on subsequent requests
+  - Token has an expiry time
+
+Reference:
+  - https://en.wikipedia.org/wiki/JSON_Web_Token#Structure
+  - https://jwt.io/
+  - https://github.com/jwtk/jjwt
+
+NOTE: This hands-on is a concept walkthrough. No code is written.
