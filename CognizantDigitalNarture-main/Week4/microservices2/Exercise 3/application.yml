@@ -1,0 +1,6 @@
+spring:
+  security:
+    jwt:
+      # Secret key used to sign and verify JWT tokens
+      # Replace with a strong random secret key in production
+      secret: YOUR_SECRET_KEY

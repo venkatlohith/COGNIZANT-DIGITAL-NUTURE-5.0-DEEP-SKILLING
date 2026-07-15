@@ -1,0 +1,10 @@
+# Centralized config for inventory-service, served by config-server
+inventory:
+  reorder-threshold: 5
+  warehouse-code: WH-01
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh

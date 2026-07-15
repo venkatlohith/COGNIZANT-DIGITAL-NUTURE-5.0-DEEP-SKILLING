@@ -1,0 +1,23 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          my-client:
+            # Replace with your actual OAuth2 client credentials
+            client-id: YOUR_CLIENT_ID
+            client-secret: YOUR_CLIENT_SECRET
+            # scopes: openid for OIDC, profile and email for user info
+            scope: openid, profile, email
+            # authorization_code flow: user is redirected to provider login page
+            authorization-grant-type: authorization_code
+            # Spring Security auto-handles this redirect URI after successful login
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          my-provider:
+            # Google OAuth2 endpoints
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            # 'sub' is the unique user identifier in Google's OIDC response
+            user-name-attribute: sub

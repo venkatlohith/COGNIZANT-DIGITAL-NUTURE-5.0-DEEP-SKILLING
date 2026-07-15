@@ -1,0 +1,18 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config-repo
+        # --- Git-backed alternative (production) ---
+        # git:
+        #   uri: https://github.com/your-org/microservices-config-repo
+        #   default-label: main
+        #   clone-on-start: true

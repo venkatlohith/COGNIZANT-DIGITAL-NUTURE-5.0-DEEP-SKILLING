@@ -1,0 +1,61 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: api-gateway
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cloud:
+    gateway:
+      routes:
+        # ---- Customer Service route ----
+        - id: customer-service-route
+          uri: http://localhost:8091
+          predicates:
+            - Path=/api/customers/**
+          filters:
+            # Path rewriting: external /api/customers/123 -> internal /customers/123
+            - RewritePath=/api/customers/(?<segment>.*), /customers/${segment}
+            # Rate limiting: token-bucket, backed by Redis
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5   # tokens/sec refill
+                redis-rate-limiter.burstCapacity: 10   # bucket size
+                redis-rate-limiter.requestedTokens: 1
+                key-resolver: "#{@ipKeyResolver}"
+
+        # ---- Billing Service route ----
+        - id: billing-service-route
+          uri: http://localhost:8092
+          predicates:
+            - Path=/api/billing/**
+          filters:
+            - RewritePath=/api/billing/(?<segment>.*), /billing/${segment}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                redis-rate-limiter.requestedTokens: 1
+                key-resolver: "#{@ipKeyResolver}"
+
+      # Global CORS example - adjust as needed
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway

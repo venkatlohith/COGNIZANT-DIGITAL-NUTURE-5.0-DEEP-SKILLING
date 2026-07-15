@@ -1,0 +1,23 @@
+package com.cts.gateway.filters;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+// Global filter: applies to every route through the gateway and logs
+// the incoming request URI before the request is forwarded downstream.
+@Component
+public class LogFilter implements GlobalFilter {
+
+    Logger logger = LoggerFactory.getLogger(LogFilter.class);
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        logger.info("=====>Request URL {}", exchange.getRequest().getURI());
+        return chain.filter(exchange);
+    }
+}

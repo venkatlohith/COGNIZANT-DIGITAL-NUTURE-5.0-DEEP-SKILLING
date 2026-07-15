@@ -1,0 +1,39 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: payment-service
+
+# URL of the (simulated) slow third-party payment gateway
+third-party:
+  payment-api:
+    url: http://localhost:9999/pay   # deliberately unreachable/slow to trigger fallback
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,circuitbreakerevents,metrics
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      thirdPartyPayment:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10          # evaluate last 10 calls
+        minimum-number-of-calls: 5       # need 5 calls before calculating failure rate
+        failure-rate-threshold: 50       # trip open at 50% failure rate
+        slow-call-rate-threshold: 50     # trip open at 50% slow-call rate
+        slow-call-duration-threshold: 2s # a call >2s counts as "slow"
+        wait-duration-in-open-state: 10s # stay OPEN for 10s before trying HALF_OPEN
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+  timelimiter:
+    instances:
+      thirdPartyPayment:
+        timeout-duration: 3s             # give up waiting after 3s
